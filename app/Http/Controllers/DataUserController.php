@@ -12,11 +12,9 @@ class DataUserController extends Controller
 {
     public function index(){
         $user = Auth::user();
-        $containerName = str_replace("@", "", $user->email);
-        $command = "docker exec $containerName ls /usr";
-        exec($command, $directories, $returnVar);
-
-        //$files = scandir("/usr");
-        return View::make('usr.index', compact('directories'));
+        $email = $user->email;
+        $containerName = str_replace("@", "", $email);
+        $files = scandir("docker exec $containerName ls /usr");
+        return View::make('usr.index', compact('files'));
     }
 }

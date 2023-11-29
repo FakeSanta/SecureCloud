@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/usr', [DataUserController::class, 'index'])->name('usr.index');
-    Route::get('/data/{directory}', [RepertoireController::class, 'show'])->name('repertoire.show');
+    Route::get('/data/{path?}', [RepertoireController::class, 'show'])->name('directory.show');
 });
 
 require __DIR__.'/auth.php';

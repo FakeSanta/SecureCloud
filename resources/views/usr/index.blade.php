@@ -11,8 +11,8 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                 <h1>Contenu du Répertoire</h1><br />
                     <ul>
-                        @foreach($directories as $directory)
-                            <li><a href="{{ route('repertoire.show', ['directory' => basename($directory)]) }}">{{ basename($file) }}</a></li>
+                        @foreach($files as $file)
+                            <li>{{ basename($file) }}</li>
                         @endforeach
                     </ul>                
                 </div>

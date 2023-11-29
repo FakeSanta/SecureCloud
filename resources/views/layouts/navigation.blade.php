@@ -17,7 +17,7 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('usr.index')" :active="request()->routeIs('usr.index')">
+                    <x-nav-link :href="route('directory.show')" :active="request()->routeIs('directory.show')">
                         {{ __('Data') }}
                     </x-nav-link>
                 </div>
