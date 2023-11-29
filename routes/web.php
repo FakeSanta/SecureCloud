@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DataUserController;
 use App\Http\Controllers\RepertoireController;
+use App\Http\Controllers\DockerController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -30,8 +31,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/usr', [DataUserController::class, 'index'])->name('usr.index');
-    Route::get('/data/{path?}', [RepertoireController::class, 'show'])->name('directory.show');
+    Route::get('/data/{path?}', [RepertoireController::class, 'show'])
+    ->where('path', '.*') // Accepte tout le reste de l'URL
+    ->name('directory.show');
+
+    Route::post('/create-file', [DockerController::class, 'createFile'])->name('create.docker.file');
+    Route::post('/create-folder', [DockerController::class, 'createFolder'])->name('create.docker.folder');
+
 });
 
 require __DIR__.'/auth.php';

@@ -11,12 +11,12 @@ class RepertoireController extends Controller
 {
     public function show($path = '/')
     {
+        $path = urldecode($path);
         $user = Auth::user();
         $containerName = str_replace("@", "", $user->email);
-        $command = "docker exec $containerName ls $path";
+        $command = "docker exec $containerName ls -F $path 2>&1";
         $output = shell_exec($command);
-        $contents = ($output !== null) ? explode("\n", trim($output)) : [];
-
+        $contents = explode("\n", trim($output));
         return view('directory.show', compact('path', 'contents', 'containerName'));
     }
 
