@@ -84,7 +84,11 @@ class DockerController extends Controller
     }
 
     public function editFile($path, $name){
-
-        return view('directory.edit', compact('path', 'name'));
+        $user = Auth::user();
+        $pathAbsolute = $path . $name;
+        $containerName = str_replace("@", "", $user->email);
+        $command = "docker exec $containerName cat $pathAbsolute";
+        $output = shell_exec($command);
+        return view('directory.edit', compact('path', 'name', 'output'));
     }
 }

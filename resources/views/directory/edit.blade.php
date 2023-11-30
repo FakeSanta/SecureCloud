@@ -10,7 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.68.0/mode/shell/shell.js"></script>
 </head>
 <body>
-    <textarea id="editor"></textarea>
+    <textarea id="editor">{{ $output }}</textarea>
     <button onclick="saveFile()">Enregistrer</button>
 
     <script>
