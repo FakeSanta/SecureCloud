@@ -17,7 +17,7 @@ class RepertoireController extends Controller
         $command = "docker exec $containerName ls -F $path 2>&1";
         $output = shell_exec($command);
         $contents = explode("\n", trim($output));
-        return view('directory.show', compact('path', 'contents', 'containerName'));
+        return view('directory.show', compact('path', 'contents', 'containerName', 'output'));
     }
 
 }

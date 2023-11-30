@@ -38,6 +38,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/create-file', [DockerController::class, 'createFile'])->name('create.docker.file');
     Route::post('/create-folder', [DockerController::class, 'createFolder'])->name('create.docker.folder');
 
+    Route::post('/delete-file', [DockerController::class, 'deleteFile'])->name('delete.docker.file');
+    Route::get('/edit/{path}/{name}', [DockerController::class, 'editFile'])->name('edit.file');
 });
 
 require __DIR__.'/auth.php';
