@@ -100,7 +100,6 @@ class DockerController extends Controller
         $content = $request->input('content');
         $user = Auth::user();
         $containerName = str_replace("@", "", $user->email);
-        //$name = str_replace('/', '', $name);
         $pathAbsolute = $path . $name;
         $localPath = "C:\\Users\\Admin\\Documents\\temp\\".$name;
         $tempFile = fopen("$localPath", "w");
@@ -108,10 +107,8 @@ class DockerController extends Controller
             fwrite($tempFile, $content);
             fclose($tempFile);
             $escapedLocalPath = escapeshellarg($localPath);
-            Log::info("Avant modification : $pathAbsolute");
-            $command = "docker cp $localPath $containerName:/$path > C:\\Users\\Admin\\Documents\\temp\\docker_log.txt 2>&1";
+            $command = "docker cp $localPath $containerName:$path/";
             $output = shell_exec($command);
-            Log::info("Après modification : $pathAbsolute");
             //return redirect()->route('directory.show');
             return($command);
         }
