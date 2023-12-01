@@ -85,10 +85,33 @@ class DockerController extends Controller
 
     public function editFile($path, $name){
         $user = Auth::user();
+        $path = '/' . $path;
+        $name = '/' . $name;
         $pathAbsolute = $path . $name;
         $containerName = str_replace("@", "", $user->email);
         $command = "docker exec $containerName cat $pathAbsolute";
         $output = shell_exec($command);
-        return view('directory.edit', compact('path', 'name', 'output'));
+        return view('directory.edit', compact('path', 'name', 'output', 'pathAbsolute'));
+    }
+
+    public function updateFile(Request $request, $path, $name)
+    {
+        $content = $request->input('content');
+        $user = Auth::user();
+        $containerName = str_replace("@", "", $user->email);
+        //$name = str_replace('/', '', $name);
+        $pathAbsolute = $path . $name;
+        $localPath = "C:\\Users\\Admin\\Documents\\temp\\".$name;
+        $tempFile = fopen("$localPath", "w");
+        if($tempFile){
+            fwrite($tempFile, $content);
+            fclose($tempFile);
+            $escapedLocalPath = escapeshellarg($localPath);
+            $rmFile = "docker exec $containerName rm $pathAbsolute";
+            $execRm = shell_exec($rmFile);
+            $command = "docker cp $localPath $containerName:/$path";
+            $output = shell_exec($command);
+            return redirect()->route('directory.show');
+        }
     }
 }

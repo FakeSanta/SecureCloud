@@ -40,6 +40,11 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/delete-file', [DockerController::class, 'deleteFile'])->name('delete.docker.file');
     Route::get('/edit/{path}/{name}', [DockerController::class, 'editFile'])->name('edit.file');
+    Route::post('/update{path}/{name}', [DockerController::class, 'updateFile'])
+    ->where('path', '.*[^/]')
+    ->where('name', '.*[^/]')
+    ->name('update.file');
+
 });
 
 require __DIR__.'/auth.php';
