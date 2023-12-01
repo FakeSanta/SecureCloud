@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use App\Models\User;
 
 class DockerController extends Controller
@@ -107,11 +108,12 @@ class DockerController extends Controller
             fwrite($tempFile, $content);
             fclose($tempFile);
             $escapedLocalPath = escapeshellarg($localPath);
-            $rmFile = "docker exec $containerName rm $pathAbsolute";
-            $execRm = shell_exec($rmFile);
-            $command = "docker cp $localPath $containerName:/$path";
+            Log::info("Avant modification : $pathAbsolute");
+            $command = "docker cp $localPath $containerName:/$path > C:\\Users\\Admin\\Documents\\temp\\docker_log.txt 2>&1";
             $output = shell_exec($command);
-            return redirect()->route('directory.show');
+            Log::info("Après modification : $pathAbsolute");
+            //return redirect()->route('directory.show');
+            return($command);
         }
     }
 }
